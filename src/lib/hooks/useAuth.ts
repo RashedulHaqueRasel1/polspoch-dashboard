@@ -167,3 +167,23 @@ export const useUpdateUser = () => {
     },
   });
 };
+
+// DELETE method /user/:userId
+
+export const useDeleteUser = () => {
+  return useMutation<
+    { success: boolean; message?: string },
+    AxiosError<{ message?: string }>,
+    string
+  >({
+    mutationFn: async (userId: string) => {
+      const accessToken = localStorage.getItem("accessToken");
+      const res = await axiosInstance.delete(`/user/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      return res.data;
+    },
+  });
+};

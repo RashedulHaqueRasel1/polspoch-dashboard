@@ -11,12 +11,14 @@ import {
 } from "@/components/ui/table";
 import { Edit, Eye, Trash2 } from "lucide-react";
 import React, { useState } from "react";
-import { useGetAllUsers } from "@/lib/hooks/useAuth";
+import { useDeleteUser, useGetAllUsers } from "@/lib/hooks/useAuth";
 import UserViewModal from "./UserViewModal";
 import UserEditModal from "./UserEditModal";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { TUser } from "@/types/user";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const UserList = () => {
   const { data, isLoading } = useGetAllUsers();
@@ -25,6 +27,10 @@ const UserList = () => {
   const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [deletingUserId, setDeletingUserId] = useState<string | null>(null);
+
+  const queryClient = useQueryClient();
+  const { mutate: deleteUser } = useDeleteUser();
 
   const handleView = (user: TUser) => {
     setSelectedUser(user);
@@ -35,6 +41,31 @@ const UserList = () => {
     setSelectedUser(user);
     setIsEditModalOpen(true);
   };
+
+  const handleDelete = (userId: string) => {
+    // if (!confirm("Are you sure you want to delete this user?")) return;
+
+    setDeletingUserId(userId);
+    deleteUser(userId, {
+      onSuccess: (res) => {
+        if (res.success) {
+          toast.success(res.message || "User deleted successfully");
+          queryClient.invalidateQueries({ queryKey: ["all-users"] });
+        } else {
+          toast.error(res.message || "Failed to delete user");
+        }
+      },
+      onError: (error) => {
+        toast.error(
+          error.response?.data?.message || "An error occurred while deleting",
+        );
+      },
+      onSettled: () => {
+        setDeletingUserId(null);
+      },
+    });
+  };
+
 
   if (isLoading) {
     return (
@@ -137,15 +168,16 @@ const UserList = () => {
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
-                    {/* <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            className="text-destructive hover:text-destructive hover:bg-destructive/10 cursor-pointer"
-                                            onClick={() => handleDelete(user._id)}
-                                            disabled={false}
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button> */}
+
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-destructive hover:text-destructive hover:bg-destructive/10 cursor-pointer"
+                      onClick={() => handleDelete(user._id)}
+                      disabled={deletingUserId === user._id}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>
