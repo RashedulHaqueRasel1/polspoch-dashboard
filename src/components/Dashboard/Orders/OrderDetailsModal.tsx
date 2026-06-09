@@ -33,12 +33,12 @@ export default function OrderDetailsModal({
   // Filter items based on the tab type
   const cartItems = filterType
     ? allCartItems.filter((item) => {
-        const actualItem = item.cartId || item;
-        const itemType = actualItem.type;
-        if (filterType === "services") return itemType === "service";
-        if (filterType === "products") return itemType === "product";
-        return true;
-      })
+      const actualItem = item.cartId || item;
+      const itemType = actualItem.type;
+      if (filterType === "services") return itemType === "service";
+      if (filterType === "products") return itemType === "product";
+      return true;
+    })
     : allCartItems;
 
   const cartItemCount = cartItems.length;
@@ -160,9 +160,9 @@ export default function OrderDetailsModal({
                     <span className="text-sm font-medium">
                       {order.updatedAt
                         ? format(
-                            new Date(order.updatedAt),
-                            "dd MMM yyyy, HH:mm",
-                          )
+                          new Date(order.updatedAt),
+                          "dd MMM yyyy, HH:mm",
+                        )
                         : "N/A"}
                     </span>
                   </div>
@@ -290,133 +290,143 @@ export default function OrderDetailsModal({
                     const isProduct = actualItem.type === "product";
                     const itemName = isProduct
                       ? actualItem.product?.productId?.productName ||
-                        actualItem.product?.productName
+                      actualItem.product?.productName
                       : actualItem.serviceData?.serviceType ||
-                        actualItem.service?.templateName;
+                      actualItem.service?.templateName;
 
                     const itemData: Record<
                       string,
                       string | number | undefined
                     > = isProduct
-                      ? {
+                        ? {
                           ...(actualItem.product?.productId?.family ||
-                          actualItem.product?.family
+                            actualItem.product?.family
                             ? {
-                                Family:
-                                  actualItem.product?.productId?.family ||
-                                  actualItem.product?.family,
-                              }
+                              Family:
+                                actualItem.product?.productId?.family ||
+                                actualItem.product?.family,
+                            }
                             : {}),
                           "Product Name":
                             actualItem.product?.productId?.productName ||
                             actualItem.product?.productName ||
                             "Custom Product",
                           ...(actualItem.product?.unitSize !== null &&
-                          actualItem.product?.unitSize !== undefined
+                            actualItem.product?.unitSize !== undefined
                             ? {
-                                "Unit Size": `${actualItem.product?.unitSize} ${
-                                  actualItem.product?.productId?.measureUnit ||
-                                  actualItem.product?.measureUnit ||
-                                  ""
+                              "Unit Size": `${actualItem.product?.unitSize} ${actualItem.product?.productId?.measureUnit ||
+                                actualItem.product?.measureUnit ||
+                                ""
                                 }`,
-                              }
+                            }
                             : {}),
+
                           ...(actualItem.product?.productId
                             ?.unitSizeCustomizationNote ||
-                          actualItem.product?.unitSizeCustomizationNote
+                            actualItem.product?.unitSizeCustomizationNote
                             ? {
-                                "Customization Note":
-                                  actualItem.product?.productId
-                                    ?.unitSizeCustomizationNote ||
-                                  actualItem.product?.unitSizeCustomizationNote,
-                              }
+                              "Customization Note":
+                                actualItem.product?.productId
+                                  ?.unitSizeCustomizationNote ||
+                                actualItem.product?.unitSizeCustomizationNote,
+                            }
                             : {}),
                           ...(actualItem.product?.productId?.availabilityNote
                             ? {
-                                Availability:
-                                  actualItem.product.productId.availabilityNote,
-                              }
+                              Availability:
+                                actualItem.product.productId.availabilityNote,
+                            }
                             : {}),
                           ...(actualItem.product?.selectedFeature?.reference
                             ? {
-                                Reference:
-                                  actualItem.product.selectedFeature.reference,
-                              }
+                              Reference:
+                                actualItem.product.selectedFeature.reference,
+                            }
                             : {}),
                           ...(actualItem.product?.selectedFeature?.size1 !==
                             null &&
-                          actualItem.product?.selectedFeature?.size1 !==
+                            actualItem.product?.selectedFeature?.size1 !==
                             undefined
                             ? {
-                                Dimensions: `${actualItem.product.selectedFeature.size1}${
-                                  actualItem.product.selectedFeature.size2 !==
-                                    null &&
-                                  actualItem.product.selectedFeature.size2 !==
-                                    undefined
-                                    ? ` x ${actualItem.product.selectedFeature.size2}`
-                                    : ""
+                              Dimensions: `${actualItem.product.selectedFeature.size1}${actualItem.product.selectedFeature.size2 !==
+                                null &&
+                                actualItem.product.selectedFeature.size2 !==
+                                undefined
+                                ? ` x ${actualItem.product.selectedFeature.size2}`
+                                : ""
                                 }mm`,
-                              }
+                            }
                             : {}),
                           ...(actualItem.product?.selectedFeature?.thickness !==
                             null &&
-                          actualItem.product?.selectedFeature?.thickness !==
+                            actualItem.product?.selectedFeature?.thickness !==
                             undefined
                             ? {
-                                Thickness: `${actualItem.product.selectedFeature.thickness}mm`,
-                              }
+                              Thickness: `${actualItem.product.selectedFeature.thickness}mm`,
+                            }
                             : {}),
                           ...(actualItem.product?.selectedFeature?.finishQuality
                             ? {
-                                "Finish Quality":
-                                  actualItem.product.selectedFeature
-                                    .finishQuality,
-                              }
+                              "Finish Quality":
+                                actualItem.product.selectedFeature
+                                  .finishQuality,
+                            }
                             : {}),
                           ...(actualItem.product?.selectedFeature?.unitSizes &&
-                          actualItem.product?.selectedFeature?.unitSizes
-                            .length > 0
+                            actualItem.product?.selectedFeature?.unitSizes
+                              .length > 0
                             ? {
-                                "Unit Sizes":
-                                  actualItem.product.selectedFeature.unitSizes.join(
-                                    ", ",
-                                  ),
-                              }
+                              "Unit Sizes":
+                                actualItem.product.selectedFeature.unitSizes.join(
+                                  ", ",
+                                ),
+                            }
                             : {}),
                           ...(actualItem.product?.selectedFeature
                             ?.kgsPerUnit !== null &&
-                          actualItem.product?.selectedFeature?.kgsPerUnit !==
+                            actualItem.product?.selectedFeature?.kgsPerUnit !==
                             undefined
                             ? {
-                                "Kgs per Unit": `${actualItem.product.selectedFeature.kgsPerUnit}kg`,
-                              }
+                              "Kgs per Unit": `${actualItem.product.selectedFeature.kgsPerUnit}kg`,
+                            }
                             : {}),
+
+                          ...(actualItem.product?.length !== null &&
+                            actualItem.product?.length !== undefined
+                            ? {
+                              "Length": `${actualItem.product?.length} ${actualItem.product?.productId?.measureUnit ||
+                                actualItem.product?.measureUnit ||
+                                ""
+                                }`,
+                            }
+                            : {}),
+
                           ...(actualItem.product?.selectedFeature
                             ?.miterPerUnitPrice !== null &&
-                          actualItem.product?.selectedFeature
-                            ?.miterPerUnitPrice !== undefined
+                            actualItem.product?.selectedFeature
+                              ?.miterPerUnitPrice !== undefined
                             ? {
-                                "Miter Per Unit Price": `€${actualItem.product.selectedFeature.miterPerUnitPrice}`,
-                              }
+                              "Miter Per Unit Price": `€${actualItem.product.selectedFeature.miterPerUnitPrice}`,
+                            }
                             : {}),
                           ...(actualItem.product?.selectedFeature?.minRange !==
                             null &&
-                          actualItem.product?.selectedFeature?.minRange !==
+                            actualItem.product?.selectedFeature?.minRange !==
                             undefined &&
-                          actualItem.product?.selectedFeature?.maxRange !==
+                            actualItem.product?.selectedFeature?.maxRange !==
                             null &&
-                          actualItem.product?.selectedFeature?.maxRange !==
+                            actualItem.product?.selectedFeature?.maxRange !==
                             undefined
                             ? {
-                                Range: `${actualItem.product.selectedFeature.minRange} - ${actualItem.product.selectedFeature.maxRange}mm`,
-                              }
+                              Range: `${actualItem.product.selectedFeature.minRange} - ${actualItem.product.selectedFeature.maxRange}mm`,
+                            }
                             : actualItem.product?.selectedFeature?.maxRange !==
-                                  null &&
-                                actualItem.product?.selectedFeature
-                                  ?.maxRange !== undefined
+                              null &&
+                              actualItem.product?.selectedFeature
+                                ?.maxRange !== undefined
                               ? {
-                                  Range: `Up to ${actualItem.product.selectedFeature.maxRange}mm`,
-                                }
+                                Range: `Up to ${actualItem.product.selectedFeature.maxRange}mm`,
+                              }
                               : actualItem.product?.range
                                 ? { Range: actualItem.product.range }
                                 : {}),
@@ -425,8 +435,8 @@ export default function OrderDetailsModal({
                             ? `€${actualItem.totalAmount.toLocaleString()}`
                             : "Pending Calculation",
                         }
-                      : actualItem.serviceData
-                        ? // New serviceData structure
+                        : actualItem.serviceData
+                          ? // New serviceData structure
                           {
                             "Service Type":
                               actualItem.serviceData.serviceType ||
@@ -487,7 +497,7 @@ export default function OrderDetailsModal({
                               ? `€${actualItem.totalAmount.toLocaleString()}`
                               : "Pending Calculation",
                           }
-                        : // Old service structure (fallback)
+                          : // Old service structure (fallback)
                           {
                             "Service Name": itemName || "Custom Service",
                             "Service Type":
@@ -503,12 +513,12 @@ export default function OrderDetailsModal({
                               : "Contact for Quote",
                             "Dimension Sizes": actualItem.service?.sizes
                               ? Object.entries(actualItem.service.sizes)
-                                  .filter(
-                                    ([, v]) =>
-                                      v !== 0 && v !== undefined && v !== null,
-                                  )
-                                  .map(([k, v]) => `${k}: ${v}`)
-                                  .join(", ")
+                                .filter(
+                                  ([, v]) =>
+                                    v !== 0 && v !== undefined && v !== null,
+                                )
+                                .map(([k, v]) => `${k}: ${v}`)
+                                .join(", ")
                               : "Custom Dimensions",
                             Quantity: actualItem.quantity || 1,
                             "Total Amount": actualItem.totalAmount
