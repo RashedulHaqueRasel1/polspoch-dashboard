@@ -26,6 +26,7 @@ export interface SelectedFeature {
   kgsPerUnit?: number;
   miterPerUnitPrice?: number;
   unitSizes?: number[];
+  length?: number[];
   minRange?: number | null;
   maxRange?: number | null;
 }
@@ -57,6 +58,7 @@ export interface ProductDetails {
   range?: number;
   unitSizeCustomizationNote: string;
   unitSize?: number;
+  length?: number;
   selectedFeature?: SelectedFeature;
   createdAt: string;
   updatedAt: string;

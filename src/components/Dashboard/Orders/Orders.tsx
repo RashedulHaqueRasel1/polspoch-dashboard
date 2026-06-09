@@ -273,8 +273,8 @@ export default function Orders() {
                         const itemName =
                           firstItem?.type === "product"
                             ? // Handle potential nested productId structure
-                              firstItem.product?.productId?.productName ||
-                              firstItem.product?.productName
+                            firstItem.product?.productId?.productName ||
+                            firstItem.product?.productName
                             : firstItem?.service?.templateName;
 
                         if (relevantItems.length === 1) {
@@ -352,11 +352,11 @@ export default function Orders() {
                               className={cn(
                                 "capitalize shadow-none border-none text-[10px] h-5",
                                 paymentStatus === "paid" &&
-                                  "bg-green-100 text-green-700 hover:bg-green-100",
+                                "bg-green-100 text-green-700 hover:bg-green-100",
                                 paymentStatus === "unpaid" &&
-                                  "bg-red-100 text-red-700 hover:bg-red-100",
+                                "bg-red-100 text-red-700 hover:bg-red-100",
                                 paymentStatus === "failed" &&
-                                  "bg-red-100 text-red-700 hover:bg-red-100",
+                                "bg-red-100 text-red-700 hover:bg-red-100",
                               )}
                             >
                               {paymentStatus}
