@@ -30,7 +30,7 @@ export default function Login() {
         password,
         redirect: false,
       });
-      // If API returns "success: true"
+      // If API returns "success: trues"
       if (result?.ok) {
         toast.success("Logged in successfully!");
         router.push("/");
