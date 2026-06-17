@@ -1,6 +1,7 @@
-import Orders from "@/components/Dashboard/Orders/Orders";
+
 import React, { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import Orders from "@/components/Dashboard/Orders/Orders";
 
 export default function page() {
   return (
